@@ -10,4 +10,4 @@ class Solution(object):
                 next_dp[current_sum - num] += count
             dp = next_dp
 
-        return dp[target]T
+        return dp[target]
