@@ -1,5 +1,6 @@
 class Solution {
 public:
+    /*
     int minimumOperations(vector<int>& nums) {
         vector<int> duplicates;
         vector<int> freqArr(101, 0);
@@ -33,5 +34,35 @@ public:
         }
 
         return ret;
+    }
+    */
+    bool isDistinct(const vector<int>& nums, int start) {
+        unordered_set<int> seen;
+        for (int i = start; i < nums.size(); i++) {
+            if (seen.count(nums[i])) {
+                return false;
+            }
+            seen.insert(nums[i]);
+        }
+        return true;
+    }
+    
+    int minimumOperations(vector<int>& nums) {
+        int n = nums.size();
+        int maxOps = (n+2) / 3;
+        
+        int lo = 0, hi = maxOps, ans = -1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            int startIndex = mid * 3;
+            if (startIndex >= n || isDistinct(nums, startIndex)) {
+                ans = mid;
+                hi = mid - 1;
+            } 
+            else {
+                lo = mid + 1;
+            }
+        }
+        return ans;
     }
 };
